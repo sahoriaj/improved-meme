@@ -1,157 +1,72 @@
 <!DOCTYPE html>
-
 <html lang="en-us">
-    <head>
-	<meta name="generator" content="Hugo 0.51" />
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<meta name="description" content="Download youtube thumbnail Images and vimeo videos of all quality. This app lets you to download HD thumbnail images for free. Just enter the URL of the video for which thumbnail needs to be saved.">
-	
-		<title>
-				Youtube thumbnail Image View and Download
-		</title>
-	
-		
-		  <link rel="stylesheet" href="/css/style.css">
-		<link rel="canonical" href="https://youtube-thumbnail-grabber.com/">
-		
-		<link rel="icon" type="image/png" sizes="32x32" href="https://youtube-thumbnail-grabber.com/images/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="https://youtube-thumbnail-grabber.com/images/favicon-16x16.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="https://youtube-thumbnail-grabber.com/images/apple-touch-icon.png">
-	
-		
-		<link href="https://youtube-thumbnail-grabber.com/index.xml" rel="alternate" type="application/rss+xml" title="Download Youtube Thumbnail" />	
-	</head>
-	
-
-    <body>
-        		<nav class="nav">
-			<div class="nav-container" style="width: 100%;max-width:100%;padding-left:20px;">
-				<a href="/">
-					<h2 class="nav-title">Download Youtube Thumbnail</h2>
-				</a>
-				<ul style="padding-right:20px;">
-    
-    <li class="fontBlack chromeExt"><a href="https://j.mp/2BI4t7d" rel="noopener noreferrer" target="_blank">Find youtube video tags</a></li>
-    <li ><a href="/posts">Posts</a></li>
-    <li ><a href="../../posts/privcaypolicy/">Privacy Policy</a></li>
-</ul>
-			</div>
-		</nav>
-
-        
-
-<main>
-	
-
-
-<div class='bodyContainer'>
-
-<div class='adContainer lg-ad' style='margin-top:5px;height:75px;text-align:center;'>
-  
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-4440908229393438"
-     data-ad-slot="8239364825"
-     data-ad-format="auto"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
-<header style="margin-top: -30px;">
-<p style='text-align: center;margin:0 auto;max-width: 500px;padding-top: 30px;padding-bottom: 30px;font-size: 16px;margin-top:50px;'>Download youtube and vimeo thumbnail images of all quality for free. This application let you download thumbnails of all quality. Just paste the URL of the thumbnail video in the below input and click Get Thumbnail Image </h1>
-</header>
-
-<div class='container'>
-<form class='downloadForm' onsubmit="event.preventDefault();initDownloadLinks();">
-    <input aria-label='input URL ' class='form-control col-lg-6' id='inputURL' placeholder='Enter the youtube URL here' type='url' name='url'/>
-<button class='btn btn-default' id='submitButton' type='button'>Get Thumbnail Images</button>
-
-</form>
-<div style="width:100%;">
-  </div>
-<div id="imgListing"class='imgListing' style="width:100%;left:0px">
-  <div id='topListing' style="display: none">
-  <h5 class="right-click-info">Right Click and click on 'Save Image As..' to save the images.</h5>
-<h5 id='hdrestext'>HD Thumbnail Image (1280x720)</h5>
-<a id="hdreslink" class="download-btn">Download HD Thumbnail Image</a>
-  <img id='maxres'src="" loading="eager">
-  <h5 id='sdrestext'>SD Thumbnail Image (640x480)</h5>
-  <a id="sdreslink" class="download-btn">Download SD Thumbnail Image</a>
-<img id='sdres' src=""  loading="auto">
-</div>
-
-<div id='bottomListing' style="display: none">
-<h5 id='normalrestext'>Normal Thumbnail Image (480x360)</h5>
-<a id="hqreslink" class="download-btn">Download Normal Thumbnail Image(480x360)</a>
-<img id='hqres' src="" loading="lazy">
-<div id='extraYTImg'>
-<h5>Normal Image (320x180)</h5>
-<a id="mqreslink" class="download-btn">Download Normal Thumbnail Image(320x180)</a>
-<img id='mqres'src="" loading="lazy">
-
-<h5>Normal Image (120x90)</h5>
-<a id="defreslink" class="download-btn">Download Normal Thumbnail Image(120x90)</a>
-<img id='defres'src="" loading="lazy">
-</div>
-</div>
-</div>
-<div class='row container-fluid ' id="extension-container" style="margin-top:50px">
-<div class='card text-center'>
-<div class='card-body'>
-<h4 class='card-title'>Extensions</h4>
-<p class='card-text'>Get Firefox extension to hassle free experience of downloading thumbnails</p>
-
-<a class='btn btn-outline-success' href='https://j.mp/3stFug0'  target="_blank"rel='noreferrer'style="display:inline"><img src="./images/1/firefox.png" alt='Firefox Extension link' style="display:inline-block">Firefox addon</a>
-</img>
-
-</div>
-</div>
-
-
-
-</div>
-
-</div>
-</div>
-
-
-<script type="text/javascript" src="/ytg.js">
-</script>
-  <script>
-    initFunction();
-    if(window.matchMedia('(max-width: 750px)').matches){
-      var width = window.innerWidth - 50;
-      width = width>200?width:200;
-      document.getElementsByTagName("ins")[0].style.width=width;
-    }
-  </script>
-  <style>
-  .download-btn{
-    cursor:pointer;
-  }
-  </style>
-
-
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
-
-
-		
-</main>
-
-
-        		<footer>
-			<span>
-			
-			</span>
-		</footer>
-
-
-    </body>
-        
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download YouTube thumbnail images in HD, SD, and other qualities for free.">
+    <title>YouTube Thumbnail Downloader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f4f4f4; }
+        .container { max-width: 600px; margin: 50px auto; padding: 20px; background: white; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border-radius: 10px; }
+        input { width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 15px; cursor: pointer; background: #007BFF; color: white; border: none; border-radius: 5px; }
+        button:hover { background: #0056b3; }
+        .hidden { display: none; }
+        .thumbnail-container { display: flex; flex-direction: column; align-items: center; }
+        .thumbnail-container img { width: 100%; max-width: 400px; margin: 10px 0; border-radius: 5px; }
+        .download-btn { display: block; margin: 5px 0; padding: 5px 10px; background: #28a745; color: white; border-radius: 5px; text-decoration: none; }
+        .download-btn:hover { background: #218838; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <h2 class="nav-title">YouTube Thumbnail Downloader</h2>
+    </nav>
+    <main>
+        <div class="container">
+            <p>Enter a YouTube video URL to download its thumbnail images.</p>
+            <form id="thumbnailForm">
+                <input type="url" id="videoURL" placeholder="Enter YouTube URL" required>
+                <button type="submit">Get Thumbnails</button>
+            </form>
+            <div id="thumbnails" class="hidden">
+                <h3>Download Thumbnails</h3>
+                <div class="thumbnail-container">
+                    <a id="hdresLink" class="download-btn" download>Download HD (1280x720)</a>
+                    <img id="hdres" alt="HD Thumbnail">
+                    <a id="sdresLink" class="download-btn" download>Download SD (640x480)</a>
+                    <img id="sdres" alt="SD Thumbnail">
+                    <a id="hqresLink" class="download-btn" download>Download HQ (480x360)</a>
+                    <img id="hqres" alt="HQ Thumbnail">
+                    <a id="mqresLink" class="download-btn" download>Download Medium (320x180)</a>
+                    <img id="mqres" alt="Medium Thumbnail">
+                    <a id="defresLink" class="download-btn" download>Download Default (120x90)</a>
+                    <img id="defres" alt="Default Thumbnail">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById('thumbnailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let url = document.getElementById('videoURL').value;
+            let videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            if (!videoId) {
+                alert('Invalid YouTube URL!');
+                return;
+            }
+            videoId = videoId[1];
+            document.getElementById('thumbnails').classList.remove('hidden');
+            let qualities = ['maxresdefault', 'sddefault', 'hqdefault', 'mqdefault', 'default'];
+            let ids = ['hdres', 'sdres', 'hqres', 'mqres', 'defres'];
+            ids.forEach((id, index) => {
+                let imgUrl = `https://img.youtube.com/vi/${videoId}/${qualities[index]}.jpg`;
+                document.getElementById(id).src = imgUrl;
+                document.getElementById(id + 'Link').href = imgUrl;
+            });
+        });
+    </script>
+</body>
 </html>
