@@ -1,72 +1,113 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Download YouTube thumbnail images in HD, SD, and other qualities for free.">
-    <title>YouTube Thumbnail Downloader</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f4f4f4; }
-        .container { max-width: 600px; margin: 50px auto; padding: 20px; background: white; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); border-radius: 10px; }
-        input { width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        button { padding: 10px 15px; cursor: pointer; background: #007BFF; color: white; border: none; border-radius: 5px; }
-        button:hover { background: #0056b3; }
-        .hidden { display: none; }
-        .thumbnail-container { display: flex; flex-direction: column; align-items: center; }
-        .thumbnail-container img { width: 100%; max-width: 400px; margin: 10px 0; border-radius: 5px; }
-        .download-btn { display: block; margin: 5px 0; padding: 5px 10px; background: #28a745; color: white; border-radius: 5px; text-decoration: none; }
-        .download-btn:hover { background: #218838; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Embed Code Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    textarea { width: 100%; height: 150px; margin-bottom: 10px; }
+    button { padding: 10px 20px; margin-bottom: 10px; }
+    .embed-box { margin-bottom: 15px; background: #f5f5f5; padding: 10px; border: 1px solid #ccc; position: relative; }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <nav class="nav">
-        <h2 class="nav-title">YouTube Thumbnail Downloader</h2>
-    </nav>
-    <main>
-        <div class="container">
-            <p>Enter a YouTube video URL to download its thumbnail images.</p>
-            <form id="thumbnailForm">
-                <input type="url" id="videoURL" placeholder="Enter YouTube URL" required>
-                <button type="submit">Get Thumbnails</button>
-            </form>
-            <div id="thumbnails" class="hidden">
-                <h3>Download Thumbnails</h3>
-                <div class="thumbnail-container">
-                    <a id="hdresLink" class="download-btn" download>Download HD (1280x720)</a>
-                    <img id="hdres" alt="HD Thumbnail">
-                    <a id="sdresLink" class="download-btn" download>Download SD (640x480)</a>
-                    <img id="sdres" alt="SD Thumbnail">
-                    <a id="hqresLink" class="download-btn" download>Download HQ (480x360)</a>
-                    <img id="hqres" alt="HQ Thumbnail">
-                    <a id="mqresLink" class="download-btn" download>Download Medium (320x180)</a>
-                    <img id="mqres" alt="Medium Thumbnail">
-                    <a id="defresLink" class="download-btn" download>Download Default (120x90)</a>
-                    <img id="defres" alt="Default Thumbnail">
-                </div>
-            </div>
-        </div>
-    </main>
-    <script>
-        document.getElementById('thumbnailForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            let url = document.getElementById('videoURL').value;
-            let videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-            if (!videoId) {
-                alert('Invalid YouTube URL!');
-                return;
-            }
-            videoId = videoId[1];
-            document.getElementById('thumbnails').classList.remove('hidden');
-            let qualities = ['maxresdefault', 'sddefault', 'hqdefault', 'mqdefault', 'default'];
-            let ids = ['hdres', 'sdres', 'hqres', 'mqres', 'defres'];
-            ids.forEach((id, index) => {
-                let imgUrl = `https://img.youtube.com/vi/${videoId}/${qualities[index]}.jpg`;
-                document.getElementById(id).src = imgUrl;
-                document.getElementById(id + 'Link').href = imgUrl;
-            });
-        });
-    </script>
+
+<h2>🎥 Multi Video Embed Code Generator</h2>
+
+<textarea id="urlInput" placeholder="Paste multiple video URLs (one per line)..."></textarea>
+<br>
+<button onclick="generateEmbeds()">Generate Embed Codes</button>
+
+<div id="results"></div>
+
+<script>
+function generateEmbeds() {
+  const input = document.getElementById('urlInput').value.trim();
+  const lines = input.split('\n');
+  const output = document.getElementById('results');
+  output.innerHTML = '';
+
+  lines.forEach((url, index) => {
+    const trimmed = url.trim();
+    if (!trimmed) return;
+
+    let embedCode = '';
+
+    // Rumble
+    if (trimmed.includes('rumble.com/embed/')) {
+      embedCode = `<iframe src="${trimmed}" width="100%" height="360" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    // Dailymotion
+else if (trimmed.includes('dai.ly') || trimmed.includes('dailymotion.com/video')) {
+  let id = trimmed.includes('dai.ly') ? trimmed.split('/').pop() : trimmed.split('/video/')[1].split('_')[0];
+  embedCode = `
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+  <iframe src="https://geo.dailymotion.com/player/x110cm.html?video=${id}"
+    style="width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden; border:none;"
+    allowfullscreen
+  ></iframe>
+</div>`;
+}
+
+    // OK.ru
+    else if (trimmed.includes('ok.ru/video/')) {
+      embedCode = `<iframe src="${trimmed.replace('/video/', '/videoembed/')}" width="100%" height="360" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    // SoloDonghua
+    else if (trimmed.includes('solodonghua.asia')) {
+      const urlObj = new URL(trimmed);
+      const id = urlObj.searchParams.get('v');
+      embedCode = `<iframe src="https://solodonghua.asia/player/?v=${id}" width="100%" height="360" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    // YouTube
+    else if (trimmed.includes('youtube.com/watch') || trimmed.includes('youtu.be')) {
+      let videoID = '';
+      if (trimmed.includes('youtu.be')) {
+        videoID = trimmed.split('/').pop();
+      } else {
+        const urlObj = new URL(trimmed);
+        videoID = urlObj.searchParams.get('v');
+      }
+      embedCode = `<iframe width="100%" height="360" src="https://www.youtube.com/embed/${videoID}" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    // Google Drive
+    else if (trimmed.includes('drive.google.com')) {
+      const match = trimmed.match(/[-\w]{25,}/);
+      const id = match ? match[0] : '';
+      embedCode = `<iframe src="https://drive.google.com/file/d/${id}/preview" width="100%" height="360" allow="autoplay" frameborder="0" allowfullscreen></iframe>`;
+    }
+
+    if (embedCode) {
+      const div = document.createElement('div');
+      div.className = 'embed-box';
+      div.innerHTML = `
+        <button class="copy-btn" onclick="copyEmbed(${index})">Copy</button>
+        <textarea id="embed-${index}" rows="4" style="width:100%">${embedCode}</textarea>
+      `;
+      output.appendChild(div);
+    }
+  });
+}
+
+function copyEmbed(index) {
+  const textarea = document.getElementById(`embed-${index}`);
+  textarea.select();
+  textarea.setSelectionRange(0, 99999);
+  document.execCommand('copy');
+  alert("Embed code copied!");
+}
+</script>
+
 </body>
 </html>
