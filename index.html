@@ -1,182 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Embed Code Generator</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f2f3f7;
-      padding: 30px;
-      margin: 0;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    textarea#urlInput {
-      width: 100%;
-      height: 140px;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      resize: vertical;
-      margin-bottom: 10px;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    button {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      display: block;
-      margin: 0 auto 20px auto;
-    }
-
-    button:hover {
-      background: #45a049;
-    }
-
-    .embed-box {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      position: relative;
-      border-left: 5px solid #4CAF50;
-    }
-
-    .copy-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #2196F3;
-      color: white;
-      border: none;
-      padding: 5px 12px;
-      font-size: 14px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .copy-btn:hover {
-      background: #1976d2;
-    }
-
-    .embed-box textarea {
-      width: 100%;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 14px;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      resize: none;
-      box-sizing: border-box;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown Generator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="form-area">
+    <h2>Create Countdown</h2>
+    <form id="countdownForm">
+      <label>Date: <input type="date" id="date" required></label><br/>
+      <label>Time: <input type="time" id="time" required></label><br/>
+      <label>Name: <input type="text" id="title" placeholder="My Countdown"></label><br/>
+      <label>Background Theme:
+        <select id="bgColor">
+          <option value="blue">Blue</option>
+          <option value="black">Black</option>
+          <option value="crimson">Crimson</option>
+          <option value="green">Green</option>
+          <option value="violet">Violet</option>
+          <option value="cyan">Cyan</option>
+        </select>
+      </label><br/>
+      <button type="submit">Make Countdown</button>
+    </form>
+  </div>
 
-<h2>🎥 Multi Video Embed Code Generator</h2>
+  <div id="counter-area" class="hidden">
+    <div id="countdown" class="counter-box"></div>
+  </div>
 
-<textarea id="urlInput" placeholder="Paste multiple video URLs (one per line)..."></textarea>
-<br>
-<button onclick="generateEmbeds()">Generate Embed Codes</button>
-
-<div id="results"></div>
-
-<script>
-function generateEmbeds() {
-  const input = document.getElementById('urlInput').value.trim();
-  const lines = input.split('\n');
-  const output = document.getElementById('results');
-  output.innerHTML = '';
-
-  lines.forEach((url, index) => {
-    const trimmed = url.trim();
-    if (!trimmed) return;
-
-    let embedCode = '';
-
-    // Rumble
-    if (trimmed.includes('rumble.com/embed/')) {
-      embedCode = `<iframe src="${trimmed}" width="100%" height="360" frameborder="0" allowfullscreen></iframe>`;
-    }
-
-    // Dailymotion
-    else if (trimmed.includes('dai.ly') || trimmed.includes('dailymotion.com/video')) {
-      let id = trimmed.includes('dai.ly') ? trimmed.split('/').pop() : trimmed.split('/video/')[1].split('_')[0];
-      embedCode = `
-<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
-  <iframe src="https://geo.dailymotion.com/player/x110cm.html?video=${id}"
-    style="width:100%; height:100%; position:absolute; left:0px; top:0px; overflow:hidden; border:none;"
-    allowfullscreen
-  ></iframe>
-</div>`;
-    }
-
-    // OK.ru
-    else if (trimmed.includes('ok.ru/video/')) {
-      embedCode = `<iframe src="${trimmed.replace('/video/', '/videoembed/')}" width="100%" height="360" frameborder="0" allowfullscreen></iframe>`;
-    }
-
-    // SoloDonghua
-    else if (trimmed.includes('solodonghua.asia')) {
-      const urlObj = new URL(trimmed);
-      const id = urlObj.searchParams.get('v');
-      embedCode = `<iframe src="https://solodonghua.asia/player/?v=${id}" width="100%" height="360" frameborder="0" allowfullscreen></iframe>`;
-    }
-
-    // YouTube
-    else if (trimmed.includes('youtube.com/watch') || trimmed.includes('youtu.be')) {
-      let videoID = '';
-      if (trimmed.includes('youtu.be')) {
-        videoID = trimmed.split('/').pop();
-      } else {
-        const urlObj = new URL(trimmed);
-        videoID = urlObj.searchParams.get('v');
-      }
-      embedCode = `<iframe width="100%" height="360" src="https://www.youtube.com/embed/${videoID}" frameborder="0" allowfullscreen></iframe>`;
-    }
-
-    // Google Drive
-    else if (trimmed.includes('drive.google.com')) {
-      const match = trimmed.match(/[-\w]{25,}/);
-      const id = match ? match[0] : '';
-      embedCode = `<iframe src="https://drive.google.com/file/d/${id}/preview" width="100%" height="360" allow="autoplay" frameborder="0" allowfullscreen></iframe>`;
-    }
-
-    if (embedCode) {
-      const div = document.createElement('div');
-      div.className = 'embed-box';
-      div.innerHTML = `
-        <button class="copy-btn" onclick="copyEmbed(${index})">Copy</button>
-        <textarea id="embed-${index}" rows="5" readonly>${embedCode}</textarea>
-      `;
-      output.appendChild(div);
-    }
-  });
-}
-
-function copyEmbed(index) {
-  const textarea = document.getElementById(`embed-${index}`);
-  textarea.select();
-  textarea.setSelectionRange(0, 99999);
-  document.execCommand('copy');
-  alert("Embed code copied!");
-}
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
