@@ -1,34 +1,32 @@
-// Initialize Lucide icons
+// Mobile menu functionality
 document.addEventListener('DOMContentLoaded', function() {
-    lucide.createIcons();
-    
-    // Mobile menu functionality
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
     const mobileMenu = document.querySelector('.mobile-menu');
     
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('active');
+            mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
             
             // Toggle menu icon
             const icon = mobileMenuButton.querySelector('i');
-            if (mobileMenu.classList.contains('active')) {
-                icon.setAttribute('data-lucide', 'x');
+            if (mobileMenu.style.display === 'block') {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
             } else {
-                icon.setAttribute('data-lucide', 'menu');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
-            lucide.createIcons();
         });
     }
     
     // Close mobile menu when clicking on links
-    const mobileLinks = document.querySelectorAll('.mobile-menu a');
+    const mobileLinks = document.querySelectorAll('.mobile-nav a');
     mobileLinks.forEach(link => {
         link.addEventListener('click', function() {
-            mobileMenu.classList.remove('active');
+            mobileMenu.style.display = 'none';
             const icon = mobileMenuButton.querySelector('i');
-            icon.setAttribute('data-lucide', 'menu');
-            lucide.createIcons();
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
         });
     });
     
@@ -49,55 +47,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add hover effects to all tool cards
-    const toolCards = document.querySelectorAll('a[href="#"]');
-    toolCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-4px)';
-        });
+    // Add scroll animation to elements
+    const animateOnScroll = function() {
+        const elements = document.querySelectorAll('.tool-card, .feature-card');
         
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(-1px)';
+        elements.forEach(element => {
+            const elementPosition = element.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.2;
+            
+            if (elementPosition < screenPosition) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }
         });
+    };
+    
+    // Set initial state for animation
+    const toolCards = document.querySelectorAll('.tool-card');
+    const featureCards = document.querySelectorAll('.feature-card');
+    
+    toolCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
     });
     
-    // Add loading state to premium button
-    const premiumButton = document.querySelector('a[href="#"] .bg-yellow-500');
+    featureCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    });
+    
+    // Run animation on scroll
+    window.addEventListener('scroll', animateOnScroll);
+    // Run once on load
+    animateOnScroll();
+    
+    // Add hover effects to premium button
+    const premiumButton = document.querySelector('.premium-button');
     if (premiumButton) {
-        premiumButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            const originalText = this.innerHTML;
-            this.innerHTML = '<i data-lucide="loader" class="w-5 h-5 animate-spin"></i> Loading...';
-            lucide.createIcons();
-            
-            // Reset after 2 seconds
-            setTimeout(() => {
-                this.innerHTML = originalText;
-                lucide.createIcons();
-            }, 2000);
+        premiumButton.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+        });
+        
+        premiumButton.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
         });
     }
-});
-
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = 'running';
-        }
-    });
-}, observerOptions);
-
-// Observe all animated elements
-document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('[style*="animation"]');
-    animatedElements.forEach(el => {
-        el.style.animationPlayState = 'paused';
-        observer.observe(el);
-    });
 });
