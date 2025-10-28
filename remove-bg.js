@@ -332,12 +332,11 @@ function performBackgroundRemoval(settings) {
     });
 }
 
-function simulateBackgroundDetection(r, g, b, index, dataLength, settings, canvasWidth, canvasHeight) {
+function simulateBackgroundDetection(r, g, b, index, dataLength, settings, width, height) {
     // This is a simplified simulation of AI background detection
     // Real AI would use machine learning models
     
     const sensitivity = settings.sensitivity / 100;
-    const pixelPosition = index / dataLength;
     
     // Simulate different detection patterns based on mode
     let detectionThreshold;
@@ -359,11 +358,11 @@ function simulateBackgroundDetection(r, g, b, index, dataLength, settings, canva
     }
     
     // Calculate pixel coordinates
-    const x = (index / 4) % canvasWidth;
-    const y = Math.floor((index / 4) / canvasWidth);
+    const x = (index / 4) % width;
+    const y = Math.floor((index / 4) / width);
     
     // Simulate edge preservation
-    const isEdge = x < 20 || x > canvasWidth - 20 || y < 20 || y > canvasHeight - 20;
+    const isEdge = x < 20 || x > width - 20 || y < 20 || y > height - 20;
     
     if (isEdge && settings.edgeRefinement) {
         detectionThreshold *= 0.7; // More conservative near edges
@@ -401,6 +400,8 @@ function updateBackgroundPreview() {
     const ctx = canvas.getContext('2d');
     
     const originalImg = document.getElementById('originalPreview');
+    if (!originalImg.naturalWidth) return; // Image not loaded yet
+    
     canvas.width = originalImg.naturalWidth;
     canvas.height = originalImg.naturalHeight;
     
@@ -408,26 +409,26 @@ function updateBackgroundPreview() {
     switch(selectedBackground) {
         case 'white':
             ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case 'black':
             ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case 'custom':
             ctx.fillStyle = customBackgroundColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             break;
         case 'gradient':
             const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
             gradient.addColorStop(0, '#667eea');
             gradient.addColorStop(1, '#764ba2');
             ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             break;
         default: // transparent
             // For transparent, we use a checkerboard pattern
             drawCheckerboard(ctx, canvas.width, canvas.height);
-    }
-    
-    if (selectedBackground !== 'transparent') {
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     
     // Draw the processed image (with transparency)
@@ -445,6 +446,8 @@ function updateMainPreviewBackground(bgType) {
     const ctx = canvas.getContext('2d');
     
     const originalImg = document.getElementById('originalPreview');
+    if (!originalImg.naturalWidth) return; // Image not loaded yet
+    
     canvas.width = originalImg.naturalWidth;
     canvas.height = originalImg.naturalHeight;
     
