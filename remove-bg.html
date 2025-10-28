@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Background - iLoveIMG Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="remove-bg.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <i class="fas fa-heart"></i>
+                    <span>IMG</span>
+                </div>
+                
+                <nav class="desktop-nav">
+                    <a href="index.html">All</a>
+                    <a href="index.html#optimize">Optimize</a>
+                    <a href="index.html#create">Create</a>
+                    <a href="index.html#edit">Edit</a>
+                    <a href="index.html#convert">Convert</a>
+                    <a href="index.html#security">Security</a>
+                </nav>
+
+                <button class="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <nav class="mobile-nav">
+                <a href="index.html">All</a>
+                <a href="index.html#optimize">Optimize</a>
+                <a href="index.html#create">Create</a>
+                <a href="index.html#edit">Edit</a>
+                <a href="index.html#convert">Convert</a>
+                <a href="index.html#security">Security</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Remove Background Tool -->
+    <section class="remove-bg-section">
+        <div class="container">
+            <div class="remove-bg-header">
+                <h1 class="remove-bg-title">
+                    <i class="fas fa-cut"></i>
+                    Remove Background
+                </h1>
+                <p class="remove-bg-subtitle">Remove backgrounds with high accuracy using AI technology</p>
+                <div class="badge-new">NEW</div>
+            </div>
+
+            <div class="remove-bg-tool">
+                <!-- Upload Area -->
+                <div class="upload-section">
+                    <div id="uploadArea" class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your image here or click to browse</h3>
+                        <p>Supports JPG, PNG, WebP (Max: 10MB)</p>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div id="controls" class="controls" style="display: none;">
+                    <div class="control-grid">
+                        <!-- AI Mode Selection -->
+                        <div class="control-group">
+                            <label for="aiMode">
+                                <i class="fas fa-robot"></i>
+                                AI Processing Mode
+                            </label>
+                            <select id="aiMode" class="mode-select">
+                                <option value="auto">Auto (Recommended)</option>
+                                <option value="portrait">Portrait & People</option>
+                                <option value="product">Product & Objects</option>
+                                <option value="animal">Animals & Pets</option>
+                                <option value="complex">Complex Backgrounds</option>
+                            </select>
+                        </div>
+
+                        <!-- Enhancement Options -->
+                        <div class="control-group">
+                            <label>
+                                <i class="fas fa-magic"></i>
+                                Enhancement Options
+                            </label>
+                            <div class="enhancement-toggles">
+                                <label class="toggle-item">
+                                    <input type="checkbox" id="edgeRefinement" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Edge Refinement</span>
+                                </label>
+                                <label class="toggle-item">
+                                    <input type="checkbox" id="hairDetail" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Hair & Fine Details</span>
+                                </label>
+                                <label class="toggle-item">
+                                    <input type="checkbox" id="shadowInclusion">
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Include Natural Shadows</span>
+                                </label>
+                                <label class="toggle-item">
+                                    <input type="checkbox" id="transparency" checked>
+                                    <span class="toggle-slider"></span>
+                                    <span class="toggle-label">Transparent Background</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Background Options -->
+                        <div class="control-group">
+                            <label>
+                                <i class="fas fa-palette"></i>
+                                Background Replacement
+                            </label>
+                            <div class="background-options">
+                                <div class="bg-option active" data-bg="transparent">
+                                    <div class="bg-preview transparent"></div>
+                                    <span>Transparent</span>
+                                </div>
+                                <div class="bg-option" data-bg="white">
+                                    <div class="bg-preview white"></div>
+                                    <span>White</span>
+                                </div>
+                                <div class="bg-option" data-bg="black">
+                                    <div class="bg-preview black"></div>
+                                    <span>Black</span>
+                                </div>
+                                <div class="bg-option" data-bg="custom">
+                                    <div class="bg-preview custom">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                    <span>Custom Color</span>
+                                </div>
+                                <div class="bg-option" data-bg="gradient">
+                                    <div class="bg-preview gradient"></div>
+                                    <span>Gradient</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Custom Color Picker -->
+                            <div id="customColorPicker" class="custom-color-picker" style="display: none;">
+                                <input type="color" id="bgColor" value="#3498db">
+                                <span>Select custom color</span>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Settings -->
+                        <div class="control-group advanced-settings">
+                            <label class="advanced-toggle">
+                                <i class="fas fa-cog"></i>
+                                Advanced Settings
+                                <i class="fas fa-chevron-down"></i>
+                            </label>
+                            <div class="advanced-content" style="display: none;">
+                                <div class="slider-group">
+                                    <label for="sensitivity">AI Sensitivity</label>
+                                    <input type="range" id="sensitivity" min="1" max="100" value="50">
+                                    <span class="slider-value">50%</span>
+                                </div>
+                                <div class="slider-group">
+                                    <label for="smoothness">Edge Smoothness</label>
+                                    <input type="range" id="smoothness" min="1" max="100" value="75">
+                                    <span class="slider-value">75%</span>
+                                </div>
+                                <div class="slider-group">
+                                    <label for="detailLevel">Detail Level</label>
+                                    <input type="range" id="detailLevel" min="1" max="100" value="80">
+                                    <span class="slider-value">80%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="removeBgBtn" class="remove-bg-btn">
+                            <i class="fas fa-magic"></i>
+                            Remove Background
+                        </button>
+                        <button id="resetBtn" class="reset-btn">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Processing Animation -->
+                <div id="processing" class="processing" style="display: none;">
+                    <div class="processing-content">
+                        <div class="ai-animation">
+                            <div class="ai-scanner"></div>
+                            <div class="ai-dots">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                        </div>
+                        <h3>AI Analyzing Your Image</h3>
+                        <p>Detecting subjects and removing background...</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                        <div class="processing-steps">
+                            <div class="step active">
+                                <i class="fas fa-check"></i>
+                                Analyzing Image
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-sync"></i>
+                                Detecting Subjects
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-sync"></i>
+                                Removing Background
+                            </div>
+                            <div class="step">
+                                <i class="fas fa-sync"></i>
+                                Refining Edges
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div id="status" class="status" style="display: none;"></div>
+
+                <!-- Preview Area -->
+                <div id="previewArea" class="preview-area" style="display: none;">
+                    <div class="preview-header">
+                        <h3>Background Removal Results</h3>
+                        <div class="view-options">
+                            <button class="view-option active" data-view="original">Original</button>
+                            <button class="view-option" data-view="removed">Background Removed</button>
+                            <button class="view-option" data-view="comparison">Comparison</button>
+                        </div>
+                    </div>
+
+                    <div class="preview-container original-view">
+                        <div class="preview-item">
+                            <h4>Original Image</h4>
+                            <div class="image-wrapper">
+                                <img id="originalPreview" class="preview-image">
+                                <div class="image-overlay">
+                                    <span class="overlay-text">With Background</span>
+                                </div>
+                            </div>
+                            <div class="image-info">
+                                <div class="info-item">
+                                    <i class="fas fa-weight-hanging"></i>
+                                    <span id="originalSize">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-expand-alt"></i>
+                                    <span id="originalDimensions">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-file-image"></i>
+                                    <span id="originalFormat">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-item">
+                            <h4>Background Removed</h4>
+                            <div class="image-wrapper">
+                                <img id="removedBgPreview" class="preview-image">
+                                <div class="image-overlay success">
+                                    <span class="overlay-text">Background Removed</span>
+                                </div>
+                                <div class="quality-badge">
+                                    <i class="fas fa-star"></i>
+                                    AI Processed
+                                </div>
+                            </div>
+                            <div class="image-info">
+                                <div class="info-item">
+                                    <i class="fas fa-weight-hanging"></i>
+                                    <span id="processedSize">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-expand-alt"></i>
+                                    <span id="processedDimensions">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-file-image"></i>
+                                    <span id="processedFormat">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Background Preview Options -->
+                    <div class="background-preview">
+                        <h4>Preview on Different Backgrounds</h4>
+                        <div class="bg-preview-grid">
+                            <div class="bg-preview-item active" data-bg="transparent">
+                                <div class="bg-preview-box transparent">
+                                    <img id="previewTransparent" class="preview-thumb">
+                                </div>
+                                <span>Transparent</span>
+                            </div>
+                            <div class="bg-preview-item" data-bg="white">
+                                <div class="bg-preview-box white">
+                                    <img id="previewWhite" class="preview-thumb">
+                                </div>
+                                <span>White</span>
+                            </div>
+                            <div class="bg-preview-item" data-bg="black">
+                                <div class="bg-preview-box black">
+                                    <img id="previewBlack" class="preview-thumb">
+                                </div>
+                                <span>Black</span>
+                            </div>
+                            <div class="bg-preview-item" data-bg="pattern">
+                                <div class="bg-preview-box pattern">
+                                    <img id="previewPattern" class="preview-thumb">
+                                </div>
+                                <span>Pattern</span>
+                            </div>
+                            <div class="bg-preview-item" data-bg="custom">
+                                <div class="bg-preview-box custom-color">
+                                    <img id="previewCustom" class="preview-thumb">
+                                </div>
+                                <span>Custom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Processing Stats -->
+                    <div class="processing-stats">
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">Accuracy Score</span>
+                                    <span class="stat-value" id="accuracyScore">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">Processing Time</span>
+                                    <span class="stat-value" id="processingTime">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-cut"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">Background Removed</span>
+                                    <span class="stat-value" id="bgRemoved">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">Quality Rating</span>
+                                    <span class="stat-value" id="qualityRating">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Options -->
+                    <div class="download-section">
+                        <div class="download-options">
+                            <label>Output Format:</label>
+                            <select id="outputFormat" class="format-select">
+                                <option value="png">PNG (Transparent)</option>
+                                <option value="jpg">JPG (White BG)</option>
+                                <option value="webp">WebP (Modern)</option>
+                            </select>
+                            <button id="downloadBtn" class="download-btn">
+                                <i class="fas fa-download"></i>
+                                Download Result
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Highlights -->
+            <div class="feature-highlights">
+                <h3>AI-Powered Background Removal</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Smart AI Detection</h4>
+                        <p>Advanced machine learning accurately detects subjects and separates them from backgrounds</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <h4>Precision Edges</h4>
+                        <p>Clean, sharp edges around hair, fur, and complex details with no manual work required</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>Instant Results</h4>
+                        <p>Get professional background removal in seconds without any technical skills</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4>Multiple Backgrounds</h4>
+                        <p>Preview and download with transparent, solid color, or custom backgrounds</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <div class="theme-toggle">
+                <button id="themeToggle" class="theme-btn">
+                    <i id="themeIcon" class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4 class="footer-title">PRODUCT</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Tools</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">RESOURCES</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">iLoveIMG</a></li>
+                        <li><a href="#">iLovePDF</a></li>
+                        <li><a href="#">iLovePPT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Terms & conditions</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">COMPANY</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">© iLoveIMG 2025 • Your Image Editor</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="remove-bg.js"></script>
+</body>
+</html>
