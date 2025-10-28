@@ -316,7 +316,7 @@ function performBackgroundRemoval(settings) {
             
             // Simple background detection simulation
             // In reality, this would use complex AI algorithms
-            const isBackground = simulateBackgroundDetection(r, g, b, i, data.length, settings);
+            const isBackground = simulateBackgroundDetection(r, g, b, i, data.length, settings, canvas.width, canvas.height);
             
             if (isBackground && settings.transparency) {
                 data[i + 3] = 0; // Set alpha to 0 for transparency
@@ -332,7 +332,7 @@ function performBackgroundRemoval(settings) {
     });
 }
 
-function simulateBackgroundDetection(r, g, b, index, dataLength, settings) {
+function simulateBackgroundDetection(r, g, b, index, dataLength, settings, canvasWidth, canvasHeight) {
     // This is a simplified simulation of AI background detection
     // Real AI would use machine learning models
     
@@ -358,11 +358,12 @@ function simulateBackgroundDetection(r, g, b, index, dataLength, settings) {
             detectionThreshold = 0.35 + (sensitivity * 0.4);
     }
     
+    // Calculate pixel coordinates
+    const x = (index / 4) % canvasWidth;
+    const y = Math.floor((index / 4) / canvasWidth);
+    
     // Simulate edge preservation
-    const isEdge = (index % (canvas.width * 4)) < 20 || 
-                   (index % (canvas.width * 4)) > (canvas.width * 4 - 20) ||
-                   index < (canvas.width * 4 * 20) || 
-                   index > (dataLength - canvas.width * 4 * 20);
+    const isEdge = x < 20 || x > canvasWidth - 20 || y < 20 || y > canvasHeight - 20;
     
     if (isEdge && settings.edgeRefinement) {
         detectionThreshold *= 0.7; // More conservative near edges
