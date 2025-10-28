@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resize Image - iLoveIMG Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resize.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <i class="fas fa-heart"></i>
+                    <span>IMG</span>
+                </div>
+                
+                <nav class="desktop-nav">
+                    <a href="index.html">All</a>
+                    <a href="index.html#optimize">Optimize</a>
+                    <a href="index.html#create">Create</a>
+                    <a href="index.html#edit">Edit</a>
+                    <a href="index.html#convert">Convert</a>
+                    <a href="index.html#security">Security</a>
+                </nav>
+
+                <button class="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <nav class="mobile-nav">
+                <a href="index.html">All</a>
+                <a href="index.html#optimize">Optimize</a>
+                <a href="index.html#create">Create</a>
+                <a href="index.html#edit">Edit</a>
+                <a href="index.html#convert">Convert</a>
+                <a href="index.html#security">Security</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Resize Tool -->
+    <section class="resize-section">
+        <div class="container">
+            <div class="resize-header">
+                <h1 class="resize-title">
+                    <i class="fas fa-arrows-alt"></i>
+                    Resize IMAGE
+                </h1>
+                <p class="resize-subtitle">Define pixels or use a percentage to resize your images</p>
+            </div>
+
+            <div class="resize-tool">
+                <!-- Upload Area -->
+                <div class="upload-section">
+                    <div id="uploadArea" class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop your image here or click to browse</h3>
+                        <p>Supports JPG, PNG, WebP, GIF (Max: 10MB)</p>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div id="controls" class="controls" style="display: none;">
+                    <div class="control-grid">
+                        <!-- Resize Method -->
+                        <div class="control-group">
+                            <label for="resizeMethod">
+                                <i class="fas fa-ruler-combined"></i>
+                                Resize Method
+                            </label>
+                            <div class="method-tabs">
+                                <button class="method-tab active" data-method="dimensions">Dimensions</button>
+                                <button class="method-tab" data-method="percentage">Percentage</button>
+                                <button class="method-tab" data-method="preset">Preset Sizes</button>
+                            </div>
+                        </div>
+
+                        <!-- Dimensions Method -->
+                        <div id="dimensionsMethod" class="method-content active">
+                            <div class="dimension-controls">
+                                <div class="dimension-group">
+                                    <label for="width">Width (px)</label>
+                                    <input type="number" id="width" min="1" max="10000" placeholder="Width">
+                                    <div class="dimension-actions">
+                                        <button class="dimension-btn" data-action="lock">
+                                            <i class="fas fa-lock"></i>
+                                        </button>
+                                        <button class="dimension-btn" data-action="swap">
+                                            <i class="fas fa-exchange-alt"></i>
+                                        </button>
+                                    </div>
+                                    <label for="height">Height (px)</label>
+                                    <input type="number" id="height" min="1" max="10000" placeholder="Height">
+                                </div>
+                                <div class="aspect-ratio">
+                                    <label class="ratio-toggle">
+                                        <input type="checkbox" id="maintainAspect" checked>
+                                        <span class="toggle-slider"></span>
+                                        <span class="toggle-label">Maintain aspect ratio</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Percentage Method -->
+                        <div id="percentageMethod" class="method-content">
+                            <div class="percentage-controls">
+                                <label for="scalePercentage">Scale Percentage</label>
+                                <div class="percentage-input">
+                                    <input type="number" id="scalePercentage" min="1" max="1000" value="100" step="1">
+                                    <span>%</span>
+                                </div>
+                                <div class="percentage-presets">
+                                    <button class="percentage-preset" data-percentage="50">50%</button>
+                                    <button class="percentage-preset" data-percentage="75">75%</button>
+                                    <button class="percentage-preset active" data-percentage="100">100%</button>
+                                    <button class="percentage-preset" data-percentage="150">150%</button>
+                                    <button class="percentage-preset" data-percentage="200">200%</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preset Method -->
+                        <div id="presetMethod" class="method-content">
+                            <div class="preset-controls">
+                                <label for="presetCategory">Category</label>
+                                <select id="presetCategory" class="preset-select">
+                                    <option value="social">Social Media</option>
+                                    <option value="web">Web & Digital</option>
+                                    <option value="print">Print</option>
+                                    <option value="device">Device Screens</option>
+                                </select>
+                                
+                                <div class="preset-grid">
+                                    <!-- Social Media Presets -->
+                                    <div class="preset-category active" data-category="social">
+                                        <div class="preset-option" data-width="1080" data-height="1080">
+                                            <div class="preset-icon">
+                                                <i class="fab fa-instagram"></i>
+                                            </div>
+                                            <span>Instagram Post</span>
+                                            <small>1080×1080</small>
+                                        </div>
+                                        <div class="preset-option" data-width="1080" data-height="1350">
+                                            <div class="preset-icon">
+                                                <i class="fab fa-instagram"></i>
+                                            </div>
+                                            <span>Instagram Story</span>
+                                            <small>1080×1350</small>
+                                        </div>
+                                        <div class="preset-option" data-width="1200" data-height="630">
+                                            <div class="preset-icon">
+                                                <i class="fab fa-facebook"></i>
+                                            </div>
+                                            <span>Facebook Post</span>
+                                            <small>1200×630</small>
+                                        </div>
+                                        <div class="preset-option" data-width="1024" data-height="512">
+                                            <div class="preset-icon">
+                                                <i class="fab fa-twitter"></i>
+                                            </div>
+                                            <span>Twitter Post</span>
+                                            <small>1024×512</small>
+                                        </div>
+                                        <div class="preset-option" data-width="1280" data-height="720">
+                                            <div class="preset-icon">
+                                                <i class="fab fa-youtube"></i>
+                                            </div>
+                                            <span>YouTube Thumbnail</span>
+                                            <small>1280×720</small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Web & Digital Presets -->
+                                    <div class="preset-category" data-category="web">
+                                        <div class="preset-option" data-width="1920" data-height="1080">
+                                            <div class="preset-icon">
+                                                <i class="fas fa-desktop"></i>
+                                            </div>
+                                            <span>Full HD</span>
+                                            <small>1920×1080</small>
+                                        </div>
+                                        <div class="preset-option" data-width="1280" data-height="720">
+                                            <div class="preset-icon">
+                                                <i class="fas fa-laptop"></i>
+                                            </div>
+                                            <span>HD Ready</span>
+                                            <small>1280×720</small>
+                                        </div>
+                                        <div class="preset-option" data-width="800" data-height="600">
+                                            <div class="preset-icon">
+                                                <i class="fas fa-tablet-alt"></i>
+                                            </div>
+                                            <span>Tablet</span>
+                                            <small>800×600</small>
+                                        </div>
+                                        <div class="preset-option" data-width="400" data-height="300">
+                                            <div class="preset-icon">
+                                                <i class="fas fa-mobile-alt"></i>
+                                            </div>
+                                            <span>Mobile</span>
+                                            <small>400×300</small>
+                                        </div>
+                                        <div class="preset-option" data-width="150" data-height="150">
+                                            <div class="preset-icon">
+                                                <i class="fas fa-image"></i>
+                                            </div>
+                                            <span>Thumbnail</span>
+                                            <small>150×150</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quality Settings -->
+                        <div class="control-group">
+                            <label>
+                                <i class="fas fa-gem"></i>
+                                Quality Settings
+                            </label>
+                            <div class="quality-controls">
+                                <div class="slider-group">
+                                    <label for="quality">Output Quality</label>
+                                    <input type="range" id="quality" min="1" max="100" value="90">
+                                    <span class="slider-value">90%</span>
+                                </div>
+                                <div class="resample-options">
+                                    <label class="option-toggle">
+                                        <input type="checkbox" id="highQuality" checked>
+                                        <span class="toggle-slider"></span>
+                                        <span class="toggle-label">High-quality resampling</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Output Format -->
+                        <div class="control-group">
+                            <label for="outputFormat">
+                                <i class="fas fa-file-export"></i>
+                                Output Format
+                            </label>
+                            <div class="format-options">
+                                <div class="format-option active" data-format="original">
+                                    <i class="fas fa-file"></i>
+                                    <span>Original Format</span>
+                                </div>
+                                <div class="format-option" data-format="jpeg">
+                                    <i class="fas fa-file-image"></i>
+                                    <span>JPEG</span>
+                                </div>
+                                <div class="format-option" data-format="png">
+                                    <i class="fas fa-file-image"></i>
+                                    <span>PNG</span>
+                                </div>
+                                <div class="format-option" data-format="webp">
+                                    <i class="fas fa-file-image"></i>
+                                    <span>WebP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="resizeBtn" class="resize-btn">
+                            <i class="fas fa-expand-alt"></i>
+                            Resize Image
+                        </button>
+                        <button id="resetBtn" class="reset-btn">
+                            <i class="fas fa-redo"></i>
+                            Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div id="status" class="status" style="display: none;"></div>
+
+                <!-- Preview Area -->
+                <div id="previewArea" class="preview-area" style="display: none;">
+                    <div class="preview-header">
+                        <h3>Resize Results</h3>
+                        <div class="size-comparison">
+                            <span class="size-original" id="originalSizeText">-</span>
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="size-resized" id="resizedSizeText">-</span>
+                        </div>
+                    </div>
+
+                    <div class="preview-container">
+                        <div class="preview-item">
+                            <h4>Original Image</h4>
+                            <div class="image-wrapper">
+                                <img id="originalPreview" class="preview-image">
+                                <div class="image-overlay">
+                                    <span class="overlay-text" id="originalDimensions">-</span>
+                                </div>
+                            </div>
+                            <div class="image-info">
+                                <div class="info-item">
+                                    <i class="fas fa-weight-hanging"></i>
+                                    <span id="originalSize">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-expand-alt"></i>
+                                    <span id="originalDimensionsText">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-file-image"></i>
+                                    <span id="originalFormat">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-item">
+                            <h4>Resized Image</h4>
+                            <div class="image-wrapper">
+                                <img id="resizedPreview" class="preview-image">
+                                <div class="image-overlay success">
+                                    <span class="overlay-text" id="resizedDimensions">-</span>
+                                </div>
+                                <div class="quality-badge">
+                                    <i class="fas fa-check"></i>
+                                    Resized
+                                </div>
+                            </div>
+                            <div class="image-info">
+                                <div class="info-item">
+                                    <i class="fas fa-weight-hanging"></i>
+                                    <span id="resizedSize">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-expand-alt"></i>
+                                    <span id="resizedDimensionsText">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-file-image"></i>
+                                    <span id="resizedFormat">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resize Stats -->
+                    <div class="resize-stats">
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-arrows-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">Size Change</span>
+                                    <span class="stat-value" id="sizeChange">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">Quality Score</span>
+                                    <span class="stat-value" id="qualityScore">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">Scale Factor</span>
+                                    <span class="stat-value" id="scaleFactor">-</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-compress-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <span class="stat-label">File Reduction</span>
+                                    <span class="stat-value" id="fileReduction">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Section -->
+                    <div class="download-section">
+                        <button id="downloadBtn" class="download-btn">
+                            <i class="fas fa-download"></i>
+                            Download Resized Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Highlights -->
+            <div class="feature-highlights">
+                <h3>Professional Image Resizing</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <h4>Multiple Resize Methods</h4>
+                        <p>Resize by exact dimensions, percentage scaling, or choose from popular preset sizes</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4>Aspect Ratio Control</h4>
+                        <p>Maintain original proportions or customize dimensions with aspect ratio locking</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>High Quality Output</h4>
+                        <p>Advanced resampling algorithms ensure sharp, clear results at any size</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-magic"></i>
+                        </div>
+                        <h4>Smart Presets</h4>
+                        <p>One-click resizing for social media, web, print, and device screens</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4 class="footer-title">PRODUCT</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Tools</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">RESOURCES</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">iLoveIMG</a></li>
+                        <li><a href="#">iLovePDF</a></li>
+                        <li><a href="#">iLovePPT</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">LEGAL</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Terms & conditions</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4 class="footer-title">COMPANY</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">© iLoveIMG 2025 • Your Image Editor</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="resize.js"></script>
+</body>
+</html>
